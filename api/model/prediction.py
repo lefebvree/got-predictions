@@ -9,32 +9,35 @@ class Prediction:
         p_dict = json.loads(predictions_json)
 
         self.character_fates = {
-            Character[q_id]: CharacterStatus(q_val) for q_id, q_val in p_dict['character_fates'].iteritems()
+            Character[q_id]: CharacterStatus(q_val) for q_id, q_val in p_dict['character_fates'].items()
         }
 
         self.yes_no_questions = {
-            YesNoQuestion[q_id]: bool(q_val) for q_id, q_val in p_dict['yes_no_questions'].iteritems()
+            YesNoQuestion[q_id]: bool(q_val) for q_id, q_val in p_dict['yes_no_questions'].items()
         }
 
         self.character_choices = {
-            CharacterChoiceQuestion[q_id]: Character[q_val] for q_id, q_val in p_dict['character_choices'].iteritems()
+            CharacterChoiceQuestion[q_id]: Character[q_val] for q_id, q_val in p_dict['character_choices'].items()
         }
 
     @property
     def json(self):
         return {
             'character_fates': {
-                q.name: v.value for q, v in self.character_fates.iteritems()
+                q.name: v.value for q, v in self.character_fates.items()
             },
-            'yes_no_questions': self.yes_no_questions,
-            'character_choices': self.character_choices
+            'yes_no_questions': {
+                q.name: v.value for q, v in self.yes_no_questions.items()
+            },
+            'character_choices': {
+                q.name: v.id for q, v in self.character_choices.items()
+            }
         }
 
 
 class Question(Enum):
-    def __init__(self, choice_id, text, img_src):
+    def __init__(self, text, img_src):
         super().__init__()
-        self.id = choice_id
         self.text = text
         self.img_src = img_src
 

@@ -30,7 +30,7 @@ def add_room():
 
     except exc.IntegrityError:
         db.session.rollback()
-        return jsonify({'error': 'room already exists'}), 403
+        return jsonify({'error': 'Room "{}" already exists'.format(request.form['name'])}), 403
 
 
 @app.route('/room/<int:room_id>/user/add', methods=['POST'])
@@ -38,19 +38,20 @@ def add_user(room_id):
     room = db.session.query(Room).get(room_id)
     if room:
         try:
-            name = request.form['name']
             predictions_json = request.form['predictions']
+            try:
+                Prediction(predictions_json)
+            except (ValueError, TypeError):
+                return jsonify({'error': 'Invalid predictions format'}), 400
 
-            predictions = Prediction(predictions_json)
-
-            new_user = User(name=request.form['name'], room_id=room_id)
+            new_user = User(name=request.form['name'], room_id=room_id, predictions_json=predictions_json)
             db.session.add(new_user)
             db.session.commit()
             return jsonify(new_user.json), 201
 
         except exc.IntegrityError:
             db.session.rollback()
-            return jsonify({'error': 'user already exists'}), 403
+            return jsonify({'error': 'User "{}" already exists'.format(request.form['name'])}), 403
 
     else:
         return jsonify({'error': 'room not found'}), 404
@@ -63,7 +64,7 @@ def get_users(room_id):
         return jsonify([user.json for user in room.users])
 
     else:
-        return jsonify({'error': 'room not found'}), 404
+        return jsonify({'error': 'Room not found'}), 404
 
 
 @app.route('/questions')
