@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from model.model import Base
 from model.room import Room
 from model.user import User
-from model.prediction import Prediction, Character
+from model.prediction import Prediction, Question
 
 
 app = Flask(__name__)
@@ -18,8 +18,6 @@ db = SQLAlchemy(app)
 def setup():
     Base.metadata.drop_all(bind=db.engine)
     Base.metadata.create_all(bind=db.engine)
-
-    p = Prediction(fates={Character.ARYA_STARK: {'death': True}})
 
 
 @app.route('/room/add', methods=['POST'])
@@ -40,6 +38,11 @@ def add_user(room_id):
     room = db.session.query(Room).get(room_id)
     if room:
         try:
+            name = request.form['name']
+            predictions_json = request.form['predictions']
+
+            predictions = Prediction(predictions_json)
+
             new_user = User(name=request.form['name'], room_id=room_id)
             db.session.add(new_user)
             db.session.commit()
@@ -61,6 +64,11 @@ def get_users(room_id):
 
     else:
         return jsonify({'error': 'room not found'}), 404
+
+
+@app.route('/questions')
+def get_all_questions():
+    return jsonify(Question.get_all_questions())
 
 
 if __name__ == "__main__":

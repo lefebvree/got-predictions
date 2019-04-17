@@ -1,5 +1,7 @@
 
-from sqlalchemy import Column, Integer, String, ForeignKey, orm
+from datetime import datetime
+
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 
 from model.model import Base
 
@@ -10,7 +12,8 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     room_id = Column(Integer, ForeignKey('room.id'), nullable=False)
     name = Column(String(25), nullable=False, unique=True)
-    orm.relationship("Prediction", uselist=False, back_populates="prediction")
+    predictions_json = Column(String(1000), nullable=False)
+    date = Column(DateTime, onupdate=datetime.now)
 
     @property
     def json(self):
