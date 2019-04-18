@@ -20,6 +20,15 @@ def setup():
     Base.metadata.create_all(bind=db.engine)
 
 
+@app.route('/room/<string:room_name>')
+def get_room(room_name):
+    room = db.session.query(Room).get(room_name)
+    if room:
+        return jsonify(room.json)
+    else:
+        return jsonify({'error': 'Room not found'}), 404
+
+
 @app.route('/room/add', methods=['POST'])
 def add_room():
     try:
@@ -33,9 +42,9 @@ def add_room():
         return jsonify({'error': 'Room "{}" already exists'.format(request.form['name'])}), 403
 
 
-@app.route('/room/<int:room_id>/user/add', methods=['POST'])
-def add_user(room_id):
-    room = db.session.query(Room).get(room_id)
+@app.route('/room/<string:room_name>/user/add', methods=['POST'])
+def add_user(room_name):
+    room = db.session.query(Room).get(room_name)
     if room:
         try:
             predictions_json = request.form['predictions']
@@ -44,7 +53,7 @@ def add_user(room_id):
             except (ValueError, TypeError):
                 return jsonify({'error': 'Invalid predictions format'}), 400
 
-            new_user = User(name=request.form['name'], room_id=room_id, predictions_json=predictions_json)
+            new_user = User(name=request.form['name'], room_id=room_name, predictions_json=predictions_json)
             db.session.add(new_user)
             db.session.commit()
             return jsonify(new_user.json), 201
@@ -57,9 +66,9 @@ def add_user(room_id):
         return jsonify({'error': 'Room not found'}), 404
 
 
-@app.route('/room/<int:room_id>/users')
-def get_users(room_id):
-    room = db.session.query(Room).get(room_id)
+@app.route('/room/<string:room_name>/users')
+def get_users(room_name):
+    room = db.session.query(Room).get(room_name)
     if room:
         return jsonify([user.json for user in room.users])
 

@@ -1,29 +1,28 @@
 <template>
   <div id="app">
-    <h2 class="m-2 p-2">GoT Predictions</h2>
-    <div id="nav">
-      <router-link to="/">Home</router-link>
+    <div class="columns">
+      <div class="column">
+        <div class="hero bg-dark hero-sm px-2">
+          <div class="hero-body mx-2">
+            <h1>Game of Thrones Season 8 Predictions</h1>
+            <p>Who will site on the Iron Throne !?</p>
+            <!--<div id="nav">
+              <router-link to="/">Home</router-link>
+            </div>-->
+          </div>
+        </div>
+      </div>
     </div>
-    <router-view/>
+    <div class="container grid-lg">
+      <div class="content">
+        <router-view/>
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  .content {
+    margin: 50px 0;
   }
-}
 </style>

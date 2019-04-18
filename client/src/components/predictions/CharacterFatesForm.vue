@@ -1,9 +1,10 @@
 <template>
   <div>
-    <character-fate v-for="c in characters"
-      :key="c.name"
-      :name="c.name"
-      :imgSrc="c.imgSrc"
+    <character-fate v-for="(v, k) in characters"
+      :key="k"
+      :id="k"
+      :name="v.text"
+      :imgSrc="v.imgSrc"
     ></character-fate>
   </div>
 </template>
@@ -13,12 +14,9 @@ import CharacterFate from '@/components/predictions/CharacterFate.vue'
 
 export default {
   name: 'CharacterFatesForm',
-  props: {
-    characters: Array
-  },
-  data: function () {
-    return {
-      status: 0
+  computed: {
+    characters () {
+      return this.$store.state.questions['character_fates']
     }
   },
   components: {

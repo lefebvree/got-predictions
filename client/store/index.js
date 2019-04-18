@@ -1,15 +1,22 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Api from '../api/service.js'
 
 Vue.use(Vuex)
 
-const API_URL = 'http://localhost:5000'
+const API_URL = 'http://localhost/api'
+Api.init(API_URL)
 
 export default new Vuex.Store({
   state: {
-    loading: false,
-    all_questions: {}
+    api: Api,
+    questions: {
+      'character_fates': {},
+      'yes_no_questions': {},
+      'character_choices': {}
+    },
+    characters: []
   },
   mutations: {
     toggleLoading (state) {
@@ -18,11 +25,9 @@ export default new Vuex.Store({
   },
   actions: {
     fetchQuestions ({ state, commit }) {
-      commit('toggleLoading')
-      fetch(`${API_URL}/questions`).then(res => {
-        res.data.json(questions => {
-          state.all_questions = questions
-        })
+      Api.getAllQuestions().then(questions => {
+        state.questions = questions
+        state.characters = Object.values(questions['character_fates']).map(q => q.text)
       })
     }
   }
