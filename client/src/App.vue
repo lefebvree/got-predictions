@@ -1,8 +1,8 @@
 <template>
   <div id="app">
+    <h2 class="m-2 p-2">GoT Predictions</h2>
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Home</router-link>
     </div>
     <router-view/>
   </div>

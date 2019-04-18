@@ -54,7 +54,7 @@ def add_user(room_id):
             return jsonify({'error': 'User "{}" already exists'.format(request.form['name'])}), 403
 
     else:
-        return jsonify({'error': 'room not found'}), 404
+        return jsonify({'error': 'Room not found'}), 404
 
 
 @app.route('/room/<int:room_id>/users')
