@@ -14,7 +14,7 @@ import CharacterFate from '@/components/predictions/CharacterFate.vue'
 export default {
   name: 'CharacterFatesForm',
   props: {
-    characters: String
+    characters: Array
   },
   data: function () {
     return {
