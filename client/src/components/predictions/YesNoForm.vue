@@ -1,11 +1,22 @@
 <template>
   <div>
-    <yes-no-question v-for="(v, k) in characters"
-      :key="k"
-      :id="k"
-      :text="v.text"
-      :imgSrc="v.imgSrc"
-    ></yes-no-question>
+    <h3>?</h3>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Question</th>
+        </tr>
+      </thead>
+      <tbody>
+        <yes-no-question v-for="(v, k) in characters"
+          :key="k"
+          :id="k"
+          :text="v.text"
+          :imgSrc="v.imgSrc"
+        ></yes-no-question>
+      </tbody>
+    </table>
   </div>
 </template>
 

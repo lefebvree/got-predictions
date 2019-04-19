@@ -25,4 +25,9 @@
   .content {
     margin: 50px 0;
   }
+
+  .content h3 {
+    margin: 35px 20px 25px;
+    font-weight: bold;
+  }
 </style>

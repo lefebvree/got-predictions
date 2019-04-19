@@ -1,11 +1,16 @@
 <template>
   <div>
-    <character-question v-for="(v, k) in choices"
-      :key="k"
-      :id="k"
-      :text="v.text"
-      :imgSrc="v.imgSrc"
-    ></character-question>
+    <h3>Who will ... ?</h3>
+    <table class="table table-hover">
+      <tbody>
+        <character-question v-for="(v, k) in choices"
+          :key="k"
+          :id="k"
+          :text="v.text"
+          :imgSrc="v.imgSrc"
+        ></character-question>
+      </tbody>
+    </table>
   </div>
 </template>
 
