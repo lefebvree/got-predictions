@@ -81,8 +81,8 @@ class Character(Question):
     RHAEGAL = ('Rhaegal', 'rhaegal.jpeg')
     LYANNA_MORMONT = ('Lyanna Mormont', 'lyanna_mormont.jpeg')
     QYBURN = ('Qyburn', 'qyburn.jpeg')
-    THE_MOUNTAIN = ('The Mountain', 'the_mountain.jpeg')
-    THE_HOUND = ('The Hound', 'the_hound.jpeg')
+    GREGOR_CLEGANE = ('Gregor Clegane', 'the_mountain.jpeg')
+    SANDOR_CLEGANE = ('Sandor Clegane', 'the_hound.jpeg')
     THEON_GREYJOY = ('Theon Greyjoy', 'theon_greyjoy.jpeg')
     JORAH_MORMONT = ('Jorah Mormont', 'jorah_mormont.jpeg')
     BRONN = ('Bronn', 'bronn.jpeg')
@@ -114,7 +114,7 @@ class YesNoQuestion(Question):
     ARYA_KILL_LIST = ('Arya completes her kill list', 'arya_kill_list.jpeg')
     NED_STARK_COMEBACK = ('Sean Bean as Ned Stark will reappear for a scene', 'ned_stark_comeback.jpeg')
     JAQEN_COMEBACK = ('Jaqen H\'ghar makes a comeback', 'jaqen_comeback.jpeg')
-    EPISODE_2_END = ('Episode 2 ends with the White Walkers in front of Westeros', 'episode_2_end.jpeg')
+    EPISODE_2_END = ('Episode 2 ends with the White Walkers in front of Winterfell', 'episode_2_end.jpeg')
 
 
 class CharacterChoiceQuestion(Question):
@@ -122,4 +122,4 @@ class CharacterChoiceQuestion(Question):
     KILL_NIGHT_KING = ('kill the Night King', 'kill_night_king.jpeg')
     KILL_CERSEI = ('will kill Cersei', 'kill_cersei.jpeg')
     AZOR_AHAI = ('is Azor Ahai', 'azor_ahai.jpeg')
-    CLEGANE_BOWL = ('win the Cleganebowl', 'clegane_bowl.jpeg')
+    CLEGANE_BOWL = ('will win the Cleganebowl', 'clegane_bowl.jpeg')

@@ -1,24 +1,30 @@
 <template>
   <div class="accordion">
     <input type="checkbox" id="character-fates" name="accordion-checkbox" hidden checked>
-    <div class="accordion-header">
-      <h3 class="hero hero-sm">
-        <label for="character-fates">
-          <i class="icon icon-arrow-right mr-2 "></i>
-          Character Fates
-        </label>
-      </h3>
-    </div>
+    <form-header name="Character Fates" iptFor="character-fates" class="accordion-header"></form-header>
+    <p class="text">
+      <b>+1</b> point if the character status (dead or alive) is guessed correctly. <br>
+      <b>+3</b> / <b>-2</b> bonus points when
+      predicting that he will turn into a White Walker.
+    </p>
+    <p class="text">
+      <emoticon></emoticon>
+      <b>Alive</b> : Still alive at the end of the season. <br>
+      <emoticon-dead></emoticon-dead>
+      <b>Dead</b> : Dead at the end of the season. <br>
+      <skull></skull>
+      <b>White Walker</b> : Turned into a White Walker during the season, even if he died again later.
+    </p>
     <div class="accordion-body">
       <table class="table table-hover">
         <thead>
-        <tr>
-          <th class="col-8">Character</th>
-          <th class="text-center col-1" title="Still alive at the end of the season">Alive</th>
-          <th class="text-center col-1" title="Gone for good, no comeback">Dead</th>
-          <th class="text-center col-1" title="Even if if died again, this character turned a some point">White Walker</th>
-          <th class="col-1"></th>
-        </tr>
+          <tr>
+            <th class="col-8 col-sm-9">Character</th>
+            <th class="text-center col-1" title="Still alive at the end of the season">Alive</th>
+            <th class="text-center col-1" title="Gone for good, no comeback">Dead</th>
+            <th class="text-center col-1" title="Even if he died again, this character turned a some point">White Walker</th>
+            <th class="col-1 col-sm-0"></th>
+          </tr>
         </thead>
         <tbody>
         <character-fate v-for="(v, k) in characters"
@@ -34,7 +40,13 @@
 </template>
 
 <script>
+
+import FormHeader from '@/components/predictions/FormHeader.vue'
 import CharacterFate from '@/components/predictions/CharacterFate.vue'
+
+import Emoticon from 'vue-material-design-icons/Emoticon.vue'
+import EmoticonDead from 'vue-material-design-icons/EmoticonDead.vue'
+import Skull from 'vue-material-design-icons/Skull.vue'
 
 export default {
   name: 'CharacterFatesForm',
@@ -44,7 +56,11 @@ export default {
     }
   },
   components: {
-    CharacterFate
+    CharacterFate,
+    FormHeader,
+    Emoticon,
+    EmoticonDead,
+    Skull
   }
 }
 </script>

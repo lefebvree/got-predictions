@@ -5,7 +5,7 @@ import Api from '../api/service.js'
 
 Vue.use(Vuex)
 
-const API_URL = 'http://localhost/api'
+const API_URL = '/api'
 Api.init(API_URL)
 
 export default new Vuex.Store({

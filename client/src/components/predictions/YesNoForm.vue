@@ -1,14 +1,11 @@
 <template>
   <div class="accordion">
     <input type="checkbox" id="yesno-questions" name="accordion-checkbox" hidden checked>
-    <div class="accordion-header">
-      <h3 class="hero hero-sm">
-        <label for="yesno-questions">
-          <i class="icon icon-arrow-right mr-2 "></i>
-          Events
-        </label>
-      </h3>
-    </div>
+    <form-header name="Events" iptFor="yesno-questions" class="accordion-header"></form-header>
+    <p class="text">
+      <calendar-range></calendar-range>
+      <b>+1</b> / <b>-1</b> points when guessing correctly that an event will happen or not.
+    </p>
     <div class="accordion-body">
       <table class="table table-hover">
         <tbody>
@@ -26,6 +23,9 @@
 
 <script>
 import YesNoQuestion from '@/components/predictions/YesNoQuestion.vue'
+import FormHeader from '@/components/predictions/FormHeader.vue'
+
+import CalendarRange from 'vue-material-design-icons/CalendarRange.vue'
 
 export default {
   name: 'YesNoForm',
@@ -35,7 +35,9 @@ export default {
     }
   },
   components: {
-    YesNoQuestion
+    YesNoQuestion,
+    FormHeader,
+    CalendarRange
   }
 }
 </script>

@@ -2,7 +2,7 @@
   <tr>
     <td class="col-5">
       <div class="form-group">
-        <select :id="id" class="form-select">
+        <select :id="id" class="form-select" required>
           <option disabled selected>Select a Character</option>
           <option value="NOBODY">Nobody</option>
           <option v-for="character in characters" :key="character" :value="character">{{ character }}</option>

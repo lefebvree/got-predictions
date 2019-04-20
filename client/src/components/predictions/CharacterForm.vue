@@ -1,14 +1,11 @@
 <template>
   <div class="accordion">
     <input type="checkbox" id="character-questions" name="accordion-checkbox" hidden checked>
-    <div class="accordion-header">
-      <h3 class="hero hero-sm">
-        <label for="character-questions">
-          <i class="icon icon-arrow-right mr-2 "></i>
-          Character Choices
-        </label>
-      </h3>
-    </div>
+    <form-header name="Character Questions" iptFor="character-questions" class="accordion-header"></form-header>
+    <p class="text">
+      <account-circle></account-circle>
+      <b>+2</b> points when guessing correctly which character performs an action <br>
+    </p>
     <div class="accordion-body">
       <table class="table table-hover">
         <tbody>
@@ -26,6 +23,9 @@
 
 <script>
 import CharacterQuestion from '@/components/predictions/CharacterQuestion.vue'
+import FormHeader from '@/components/predictions/FormHeader.vue'
+
+import AccountCircle from 'vue-material-design-icons/AccountCircle.vue'
 
 export default {
   name: 'CharacterForm',
@@ -35,7 +35,9 @@ export default {
     }
   },
   components: {
-    CharacterQuestion
+    CharacterQuestion,
+    FormHeader,
+    AccountCircle
   }
 }
 </script>

@@ -1,16 +1,33 @@
 <template>
   <div>
     <div class="panel card">
-      <h3>Make your predictions</h3>
-      <div class="info">
-        <p>
-          Be the first one in room <b>{{ room }}</b> to make your predictions and find out who is the Three-eyed raven capable of foreseeing every outcome of the season !
-        </p>
-      </div>
+      <h3 class="ml-2"> Make your predictions</h3>
+      <p class="text">
+        Be the first one in room <b>{{ room }}</b> to make your predictions and find out who is the Three-eyed raven capable of foreseeing every outcome of the season !
+      </p>
     </div>
-    <character-fates-form class="panel card"></character-fates-form>
-    <yes-no-form class="panel card"></yes-no-form>
-    <character-form class="panel card"></character-form>
+    <form>
+      <character-fates-form class="panel card"></character-fates-form>
+      <yes-no-form class="panel card"></yes-no-form>
+      <character-form class="panel card"></character-form>
+      <div class="panel card">
+        <div class="panel-text">
+          <p>
+            Pick a name to to post yout predictions :
+          </p>
+          <div class="columns">
+            <div class="col-5">
+              <div>
+                <input class="form-input" type="text" placeholder="Name">
+              </div>
+            </div>
+            <div class="col-12 text-center mt-2">
+              <button class="btn btn-primary input-group-btn btn-lg">Submit <arrow-right-circle class="ml-2 mr-1"></arrow-right-circle> </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -18,6 +35,9 @@
 import CharacterFatesForm from '@/components/predictions/CharacterFatesForm.vue'
 import YesNoForm from '@/components/predictions/YesNoForm.vue'
 import CharacterForm from '@/components/predictions/CharacterForm.vue'
+
+import ArrowRightCircle from 'vue-material-design-icons/ArrowRightCircle.vue'
+
 import { mapActions } from 'vuex'
 
 export default {
@@ -25,7 +45,8 @@ export default {
   components: {
     CharacterFatesForm,
     YesNoForm,
-    CharacterForm
+    CharacterForm,
+    ArrowRightCircle
   },
 
   methods: { ...mapActions(['fetchQuestions']) },
@@ -43,10 +64,6 @@ export default {
 </script>
 
 <style>
-
-  .info {
-    padding: 0 50px;
-  }
 
   .panel {
     margin-bottom: 25px;
@@ -66,6 +83,10 @@ export default {
     height: fit-content;
     width: fit-content;
     border-radius: 5px;
+  }
+
+  .text .material-design-icon {
+    margin-right: 10px;
   }
 
 </style>

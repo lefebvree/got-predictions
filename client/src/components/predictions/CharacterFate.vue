@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td class="col-8">
+    <td>
       <div>
         <div class="popover popover-right">
           <figure class="avatar">
@@ -12,33 +12,30 @@
             </div>
           </div>
         </div>
-        {{ this.name }}
+        <span class="d-inline-block">
+          {{ this.name }}
+        </span>
       </div>
     </td>
-    <td class="text-center col-1">
-      <label class="form-radio form-inline">
-        <input type="radio" :name="id" v-model="status" value="0">
+    <td class="text-center">
+      <label class="form-radio form-inline" title="Alive">
+        <input type="radio" :name="id" v-model="status.alive" value="0" required>
         <i class="form-icon"></i>
       </label>
     </td>
-    <td class="text-center col-1">
-      <label class="form-radio form-inline">
-        <input type="radio" :name="id" v-model="status" value="1">
+    <td class="text-center ">
+      <label class="form-radio form-inline" title="Dead">
+        <input type="radio" :name="id" v-model="status.alive" value="1" required>
         <i class="form-icon"></i>
       </label>
     </td>
-    <td class="text-center col-1">
-      <label class="form-radio form-inline">
-        <input type="radio" :name="id" v-model="status" value="2">
+    <td class="text-center">
+      <label class="form-checkbox form-inline" title="White Walker">
+        <input type="checkbox" :name="'ww-' + id" v-model="status.ww" :disabled="status.alive === '0'" value="2">
         <i class="form-icon"></i>
       </label>
     </td>
-    <td class="col-1">
-      <samp
-      >
-        <small>1 point</small>
-      </samp>
-    </td>
+    <td> </td>
   </tr>
 </template>
 
@@ -52,7 +49,10 @@ export default {
   },
   data: function () {
     return {
-      status: ''
+      status: {
+        alive: '0',
+        ww: false
+      }
     }
   },
   computed: {
@@ -62,6 +62,16 @@ export default {
       } catch (e) {
         return ''
       }
+    }
+  },
+  watch: {
+    status: {
+      handler (s) {
+        if (s.alive === '0') {
+          s.ww = false
+        }
+      },
+      deep: true
     }
   }
 }
