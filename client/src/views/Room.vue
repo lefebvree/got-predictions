@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <h3>{{ this.roomName }} Predictions</h3>
+    <h3>{{ this.room.name }} Predictions</h3>
   </div>
 </template>
 
@@ -9,9 +9,10 @@
 
 export default {
   name: 'room',
+
   computed: {
-    roomName: function () {
-      return this.$route.params.room
+    room () {
+      return this.$store.state.currentRoom
     }
   }
 }

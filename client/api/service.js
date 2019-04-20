@@ -14,11 +14,38 @@ const Api = {
     })
   },
 
-  getRoom (name) {
+  getRoom (name, password) {
     return new Promise((resolve, reject) => {
-      fetch(`${this.baseURL}/room/${name}`).then(response => {
+      let formData = new URLSearchParams()
+      formData.append('password', password)
+      fetch(`${this.baseURL}/room/${name}`, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Content-type': 'application/x-www-form-urlencoded' }
+      }).then(response => {
         if (response.status !== 200) {
-          reject(Error('Room not Found'))
+          reject(response.status)
+        } else {
+          response.json().then(room => { resolve(room) })
+        }
+      })
+    })
+  },
+
+  createRoom (name, password) {
+    name = name.trim()
+    let formData = new URLSearchParams()
+    formData.append('name', name)
+    formData.append('password', password)
+
+    return new Promise((resolve, reject) => {
+      fetch(`${this.baseURL}/room/add`, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Content-type': 'application/x-www-form-urlencoded' }
+      }).then(response => {
+        if (response.status !== 201) {
+          reject(Error('Room already exists'))
         } else {
           response.json().then(room => { resolve(room) })
         }

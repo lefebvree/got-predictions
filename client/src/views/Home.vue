@@ -1,6 +1,6 @@
 <template>
   <div>
-    <WelcomeScreen/>
+    <WelcomeScreen :room-name="prefilledRoomName"/>
   </div>
 </template>
 
@@ -12,6 +12,11 @@ export default {
   name: 'home',
   components: {
     WelcomeScreen
+  },
+  computed: {
+    prefilledRoomName () {
+      return this.$route.params.roomName || ''
+    }
   }
 }
 </script>

@@ -7,9 +7,6 @@
             <div class="hero-body mx-2">
               <router-link to="/"><h1>Game of Thrones Predictions</h1></router-link>
               <h5>Who dies, who survives, and who will site on the Iron Throne in the final season !?</h5>
-              <!--<div id="nav">
-                <router-link to="/">Home</router-link>
-              </div>-->
             </div>
           </div>
         </div>
@@ -20,6 +17,29 @@
     </div>
   </div>
 </template>
+
+<script>
+
+export default {
+  methods: {
+    checkRoom: function () {
+      const roomName = this.$route.params.room
+      if (roomName && this.$store.state.currentRoom.name !== roomName) {
+        this.$store.dispatch('updateRoom', roomName).catch(_ => {
+          this.$router.push({ name: 'home', params: { roomName } })
+        })
+      }
+    }
+  },
+  mounted () {
+    this.checkRoom()
+  },
+  updated () {
+    this.checkRoom()
+  }
+}
+
+</script>
 
 <style lang="scss">
 
@@ -63,6 +83,10 @@
 
   .content .accordion input:checked ~ .accordion-body, .content .accordion[open] .accordion-body {
     max-height: none;
+  }
+
+  button .material-design-icon {
+    transform: translateY(1px);
   }
 
 </style>

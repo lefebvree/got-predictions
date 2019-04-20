@@ -3,7 +3,7 @@
     <div class="panel card">
       <h3 class="ml-2"> Make your predictions</h3>
       <p class="text">
-        Be the first one in room <b>{{ room }}</b> to make your predictions and find out who is the Three-eyed raven capable of foreseeing every outcome of the season !
+        Be the first one in room <b>{{ room.name }}</b> to make your predictions and find out who is the Three-eyed raven capable of foreseeing every outcome of the season !
       </p>
     </div>
     <form>
@@ -13,7 +13,7 @@
       <div class="panel card">
         <div class="panel-text">
           <p>
-            Pick a name to to post yout predictions :
+            Pick a name to to post your predictions :
           </p>
           <div class="columns">
             <div class="col-5">
@@ -49,16 +49,20 @@ export default {
     ArrowRightCircle
   },
 
-  methods: { ...mapActions(['fetchQuestions']) },
+  data () {
+    return {
+      room: {
+        name: ''
+      }
+    }
+  },
+
+  methods: {
+    ...mapActions(['fetchQuestions'])
+  },
 
   mounted () {
     this.fetchQuestions()
-  },
-
-  computed: {
-    room () {
-      return this.$route.params.room
-    }
   }
 }
 </script>
