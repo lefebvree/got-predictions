@@ -1,22 +1,26 @@
 <template>
-  <div>
-    <h3>?</h3>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Question</th>
-        </tr>
-      </thead>
-      <tbody>
-        <yes-no-question v-for="(v, k) in characters"
-          :key="k"
-          :id="k"
-          :text="v.text"
-          :imgSrc="v.imgSrc"
-        ></yes-no-question>
-      </tbody>
-    </table>
+  <div class="accordion">
+    <input type="checkbox" id="yesno-questions" name="accordion-checkbox" hidden checked>
+    <div class="accordion-header">
+      <h3 class="hero hero-sm">
+        <label for="yesno-questions">
+          <i class="icon icon-arrow-right mr-2 "></i>
+          Events
+        </label>
+      </h3>
+    </div>
+    <div class="accordion-body">
+      <table class="table table-hover">
+        <tbody>
+          <yes-no-question v-for="(v, k) in characters"
+            :key="k"
+            :id="k"
+            :text="v.text"
+            :imgSrc="v.imgSrc"
+          ></yes-no-question>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 

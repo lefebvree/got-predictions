@@ -1,19 +1,19 @@
 <template>
   <div id="app">
-    <div class="columns">
-      <div class="column">
-        <div class="hero bg-dark hero-sm px-2">
-          <div class="hero-body mx-2">
-            <h1>Game of Thrones Season 8 Predictions</h1>
-            <p>Who will site on the Iron Throne !?</p>
-            <!--<div id="nav">
-              <router-link to="/">Home</router-link>
-            </div>-->
+    <div class="container grid-lg">
+       <div class="columns">
+        <div class="column">
+          <div class="title hero hero-sm px-2">
+            <div class="hero-body mx-2">
+              <h1>Game of Thrones Season 8 Predictions</h1>
+              <h4>Who will site on the Iron Throne !?</h4>
+              <!--<div id="nav">
+                <router-link to="/">Home</router-link>
+              </div>-->
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="container grid-lg">
       <div class="content">
         <router-view/>
       </div>
@@ -22,12 +22,25 @@
 </template>
 
 <style lang="scss">
-  .content {
-    margin: 50px 0;
+
+  #app {
+    background-image: url('/img/bg_pattern.png');
+  }
+
+  .title {
+    color: #eee;
+  }
+
+  .container {
+    padding: 35px 0;
   }
 
   .content h3 {
-    margin: 35px 20px 25px;
+    padding: 35px 50px 25px;
     font-weight: bold;
+  }
+
+  .content .accordion input:checked ~ .accordion-body, .content .accordion[open] .accordion-body {
+    max-height: none;
   }
 </style>

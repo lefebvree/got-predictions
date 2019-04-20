@@ -1,17 +1,18 @@
 <template>
   <tr>
+    <td class="col-5">
+      <div class="form-group">
+        <select :id="id" class="form-select">
+          <option disabled selected>Select a Character</option>
+          <option value="NOBODY">Nobody</option>
+          <option v-for="character in characters" :key="character" :value="character">{{ character }}</option>
+        </select>
+      </div>
+    </td>
     <td>
       <label :for="id">
         {{ this.text }}
       </label>
-    </td>
-    <td>
-      <div class="form-group">
-        <select :id="id" class="form-select">
-          <option>...</option>
-          <option v-for="character in characters" :key="character">{{ character }}</option>
-        </select>
-      </div>
     </td>
   </tr>
 </template>
@@ -31,3 +32,11 @@ export default {
   }
 }
 </script>
+
+<style>
+
+  .form-group {
+    margin-left: 10px;
+  }
+
+</style>

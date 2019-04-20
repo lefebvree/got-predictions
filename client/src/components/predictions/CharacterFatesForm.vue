@@ -1,24 +1,35 @@
 <template>
-  <div>
-    <h3>Character Fates</h3>
-    <table class="table table-hover">
-      <thead>
+  <div class="accordion">
+    <input type="checkbox" id="character-fates" name="accordion-checkbox" hidden checked>
+    <div class="accordion-header">
+      <h3 class="hero hero-sm">
+        <label for="character-fates">
+          <i class="icon icon-arrow-right mr-2 "></i>
+          Character Fates
+        </label>
+      </h3>
+    </div>
+    <div class="accordion-body">
+      <table class="table table-hover">
+        <thead>
         <tr>
-          <th>Character</th>
-          <th class="text-center" title="Still alive at the end of the season">Alive</th>
-          <th class="text-center" title="Gone for good, no comeback">Dead</th>
-          <th class="text-center" title="Even if if died again, this character turned a some point">White Walker</th>
+          <th class="col-8">Character</th>
+          <th class="text-center col-1" title="Still alive at the end of the season">Alive</th>
+          <th class="text-center col-1" title="Gone for good, no comeback">Dead</th>
+          <th class="text-center col-1" title="Even if if died again, this character turned a some point">White Walker</th>
+          <th class="col-1"></th>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <character-fate v-for="(v, k) in characters"
                         :key="k"
                         :id="k"
                         :name="v.text"
-                        :imgSrc="v.imgSrc"
+                        :src="v.src"
         ></character-fate>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
