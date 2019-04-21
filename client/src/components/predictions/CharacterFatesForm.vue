@@ -9,11 +9,11 @@
     </p>
     <p class="text">
       <emoticon></emoticon>
-      <b>Alive</b> : Still alive at the end of the season. <br>
+      <b>Alive</b> : Still alive by season's end. <br>
       <emoticon-dead></emoticon-dead>
-      <b>Dead</b> : Dead at the end of the season. <br>
+      <b>Dead</b> : Dead at the end of the season. <br><br>
       <skull></skull>
-      <b>White Walker</b> : Turned into a White Walker during the season, even if he died again later.
+      <b>Whight</b> : Turned into a undead Whight (White Walkers army) during the season.
     </p>
     <div class="accordion-body">
       <table class="table table-scroll">
@@ -29,7 +29,7 @@
               <emoticon-dead class="show-sm text-justify"></emoticon-dead>
             </th>
             <th class="text-center col-1" title="Even if he died again, this character turned a some point">
-              <span class="hide-sm">White Walker</span>
+              <span class="hide-sm">Whight</span>
               <skull class="show-sm text-justify"></skull>
             </th>
             <th class="col-1 col-sm-0"></th>

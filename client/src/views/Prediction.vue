@@ -3,8 +3,8 @@
     <div class="panel card">
       <h3 class="ml-2"> Make your predictions</h3>
       <p class="text">
-        <span v-if="room.users.length === 0">Be the first one </span>
-        <span v-else>Join {{ room.users.length }} viewer{{ room.users.length === 1 ? '' : 's' }}  </span>
+        <span v-if="nbUsers === 0">Be the first one </span>
+        <span v-else>Join {{ nbUsers }} viewer{{ nbUsers === 1 ? '' : 's' }}  </span>
         in room <b>{{ room.name }}</b> to make your predictions and find out who is the Three-eyed raven capable of foreseeing every outcome of the season !
       </p>
       <p class="text">
@@ -62,13 +62,16 @@ export default {
   computed: {
     room: function () {
       return this.$store.state.currentRoom
+    },
+    nbUsers () {
+      return Object.keys(this.room.users).length
     }
   },
 
   watch: {
     userName: function () {
       if (this.$refs.nameInput && this.$refs.nameInput.checkValidity()) {
-        this.validName = !this.room.users.map(u => u.name).includes(this.userName)
+        this.validName = !Object.values(this.room.users).map(u => u.name).includes(this.userName)
       } else {
         this.validName = false
       }

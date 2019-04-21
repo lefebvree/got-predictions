@@ -16,10 +16,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/got.db'
 db = SQLAlchemy(app)
 
 
-@app.before_first_request
-def setup():
-    Base.metadata.drop_all(bind=db.engine)
-    Base.metadata.create_all(bind=db.engine)
+# @app.before_first_request
+# def setup():
+#     Base.metadata.drop_all(bind=db.engine)
+#     Base.metadata.create_all(bind=db.engine)
 
 
 @app.route('/room/<string:room_name>', methods=['POST'])

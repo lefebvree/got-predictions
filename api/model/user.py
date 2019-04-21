@@ -14,11 +14,11 @@ class User(Base):
     room_id = Column(String(25), ForeignKey('room.name'), nullable=False)
     name = Column(String(25), nullable=False)
     predictions_json = Column(String(5000), nullable=False)
-    date = Column(DateTime, onupdate=datetime.now)
+    date = Column(DateTime, default=datetime.now)
 
     @property
     def json(self):
-        return {'name': self.name, 'id': self.id, 'predictions': self.predictions_json}
+        return {'name': self.name, 'predictions': self.predictions_json, 'joined': self.date}
 
     @property
     def predictions(self):

@@ -22,7 +22,7 @@ export default new Vuex.Store({
       'character_choices': {}
     },
     characters: [],
-    currentRoom: { name: null, users: [] },
+    currentRoom: { name: null, users: {} },
     savedRooms: {}
   },
   mutations: {
@@ -40,7 +40,7 @@ export default new Vuex.Store({
       if (room) {
         state.currentRoom = room
       } else {
-        state.currentRoom = { name: null }
+        state.currentRoom = { name: null, users: {} }
       }
     },
 

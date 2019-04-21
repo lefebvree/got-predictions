@@ -13,7 +13,7 @@ class Room(Base):
 
     @property
     def json(self):
-        return {'name': self.name, 'users': [user.json for user in self.users]}
+        return {'name': self.name, 'users': {user.id: user.json for user in self.users}}
 
     @staticmethod
     def clean_name(room_name):

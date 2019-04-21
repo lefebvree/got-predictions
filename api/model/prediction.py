@@ -122,22 +122,23 @@ class Character(Question):
     YARA_GREYJOY = ('Yara Greyjoy', 'yara_greyjoy.jpeg', None)
     HOT_PIE = ('Hot Pie', 'hot_pie.jpeg', None)
     THE_NIGHT_KING = ('The Night King', 'the_night_king.jpeg', None)
-    NED_STARK = ('Ned Stark', 'hot_pie.jpeg', 1)
 
 
 class YesNoQuestion(Question):
     CERSEI_PREGNANT = ('Cersei is pregnant', None, None)
     DAENERYS_PREGNANT = ('Daenerys get pregnant', None, None)
     BRAN_NIGHT_KING = ('Bran is related to the Night King', None, None)
-    CANT_KILL_WW = ('Someone won\'t be able to kill his friend who turned into a white walker', None, None)
+    CANT_KILL_WW = ('Someone won\'t be able to kill his friend who turned into a whight', None, None)
     WINTERFELL_DESTROYED = ('Winterfell get destroyed', None, None)
     KING_LANDING_DESTROYED = ('King\'s Landing get destroyed', None, None)
     WW_REACH_ESSOS = ('The White Walkers reach Essos', None, None)
     ARYA_KILL_LIST = ('Arya completes her kill list', None, None)
     NED_STARK_COMEBACK = ('Sean Bean as Ned Stark will reappear for a scene', None, None)
     JAQEN_COMEBACK = ('Jaqen H\'ghar makes a comeback', None, None)
-    ALREADY_TRUE = ('Already true', None, True)
-    ALREADY_FALSE = ('Already false', None, False)
+    WW_WINTERFELL = ('Episode 2 ends with the White Walkers in front of Winterfell', None, None)
+    JON_DAENERYS = ('Despite their parentage, Jon and Daenerys remain in love', None, None)
+    NO_DRAGON = ('None of the dragons survives', None, None)
+    NO_DIREWOLF = ('No Stark direwolf survives', None, None)
 
 
 class CharacterChoiceQuestion(Question):
@@ -146,4 +147,6 @@ class CharacterChoiceQuestion(Question):
     KILL_CERSEI = ('will kill Cersei', None, None)
     AZOR_AHAI = ('is Azor Ahai', None, None)
     CLEGANE_BOWL = ('will win the Cleganebowl', None, None)
-    TEST = ('loses his head', None, 'Ned Stark')
+    KILL_DRAGON = ('will kill a dragon (ice dragon or not)', None, None)
+    DIES_EPISODE_2 = ('will die in Episode 2', None, None)
+    LAST_DEATH = ('will be the last person to die', None, None)
