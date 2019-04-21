@@ -51,6 +51,29 @@ const Api = {
         }
       })
     })
+  },
+
+  submitPredictions (room, roomPassword, userName, predictions) {
+    room = room.trim()
+    userName = userName.trim()
+    let formData = new URLSearchParams()
+    formData.append('password', roomPassword)
+    formData.append('name', userName)
+    formData.append('predictions', predictions)
+
+    return new Promise((resolve, reject) => {
+      fetch(`${this.baseURL}/room/${room}/user/add`, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Content-type': 'application/x-www-form-urlencoded' }
+      }).then(response => {
+        if (response.status !== 201) {
+          reject(Error('Error sending predictions'))
+        } else {
+          response.json().then(room => { resolve(room) })
+        }
+      })
+    })
   }
 }
 

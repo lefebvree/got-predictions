@@ -1,18 +1,20 @@
 <template>
   <div id="app">
-    <div class="container grid-lg">
-       <div class="columns">
-        <div class="column">
-          <div class="title hero hero-sm px-2">
-            <div class="hero-body mx-2">
-              <router-link to="/"><h1>Game of Thrones Predictions</h1></router-link>
-              <h5>Who dies, who survives, and who will site on the Iron Throne in the final season !?</h5>
+    <div>
+      <div class="container grid-lg">
+        <div class="columns">
+          <div class="column">
+            <div class="title hero hero-sm px-2">
+              <div class="hero-body mx-2">
+                <router-link to="/"><h1>Game of Thrones Predictions</h1></router-link>
+<!--                <h5>Who dies, who survives, and who will site on the Iron Throne in the final season !?</h5>-->
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="content">
-        <router-view/>
+        <div class="content">
+          <router-view/>
+        </div>
       </div>
     </div>
   </div>
@@ -36,6 +38,9 @@ export default {
   },
   updated () {
     this.checkRoom()
+  },
+  created () {
+    this.$store.commit('loadRooms')
   }
 }
 
@@ -45,14 +50,11 @@ export default {
 
   body {
     background-image: url('/img/bg_pattern.png') !important;
+    overflow-x: hidden;
   }
 
   h1, h2, h3 {
     font-family: 'Roboto Slab', serif;
-  }
-
-  .container {
-    padding: 35px 0;
   }
 
   .title, .title a {

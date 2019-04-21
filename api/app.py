@@ -1,4 +1,6 @@
 
+from json import dumps
+
 from flask import Flask, request, jsonify
 from sqlalchemy import exc
 from flask_sqlalchemy import SQLAlchemy
@@ -10,7 +12,7 @@ from model.prediction import Prediction, Question
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/got.db'
 db = SQLAlchemy(app)
 
 
@@ -22,12 +24,9 @@ def setup():
 
 @app.route('/room/<string:room_name>', methods=['POST'])
 def get_room(room_name):
-    room_name = ''.join(e for e in room_name if e.isalnum())
-    room_name = room_name.strip().lower()
-
+    room_name = Room.clean_name(room_name)
     room = db.session.query(Room).get(room_name)
     if room:
-        print(request.form['password'], room.password)
         if room.password == request.form['password']:
             return jsonify(room.json)
         else:
@@ -38,10 +37,7 @@ def get_room(room_name):
 
 @app.route('/room/add', methods=['POST'])
 def add_room():
-    room_name = request.form['name']
-    room_name = ''.join(e for e in room_name if e.isalnum())
-    room_name = room_name.strip().lower()
-
+    room_name = Room.clean_name(request.form['name'])
     if 4 > len(room_name) > 50:
         return jsonify({'error': 'Invalid room name'}), 403
 
@@ -58,30 +54,45 @@ def add_room():
 
 @app.route('/room/<string:room_name>/user/add', methods=['POST'])
 def add_user(room_name):
+    room_name = Room.clean_name(room_name)
+    user_name = request.form['name']
+    room_password = request.form['password']
+    predictions_json = request.form['predictions']
+
     room = db.session.query(Room).get(room_name)
     if room:
+        if room.password == room_password:
+            if 3 > len(user_name) > 25:
+                return jsonify({'error': 'Invalid user name'.format(user_name)}), 403
 
-        user_name = request.form['name']
-        if user_name in map(lambda u: u.name, room.users):
-            return jsonify({'error': 'User "{}" already exists'.format(user_name)}), 403
+            if user_name in map(lambda u: u.name, room.users):
+                return jsonify({'error': 'User "{}" already exists'.format(user_name)}), 403
 
-        predictions_json = request.form['predictions']
-        try:
-            Prediction(predictions_json)
-        except (ValueError, TypeError):
-            return jsonify({'error': 'Invalid predictions format'}), 400
+            if len(predictions_json) > 5000:
+                return jsonify({'error': 'Invalid predictions format, too long'}), 400
 
-        new_user = User(name=user_name, room_id=room_name, predictions_json=predictions_json)
-        db.session.add(new_user)
-        db.session.commit()
-        return jsonify(new_user.json), 201
+            try:
+                predictions = Prediction(predictions_json)
+                predictions.remove_answered_questions()
+            except (ValueError, TypeError) as e:
+                print(e)
+                return jsonify({'error': 'Invalid predictions format'}), 400
 
+            filtered_json = dumps(predictions.json)
+
+            new_user = User(name=user_name, room_id=room_name, predictions_json=filtered_json)
+            db.session.add(new_user)
+            db.session.commit()
+            return jsonify(new_user.json), 201
+        else:
+            return jsonify({'error': 'Wrong password'}), 401
     else:
         return jsonify({'error': 'Room not found'}), 404
 
 
 @app.route('/room/<string:room_name>/users')
 def get_users(room_name):
+    room_name = Room.clean_name(room_name)
     room = db.session.query(Room).get(room_name)
     if room:
         return jsonify([user.json for user in room.users])

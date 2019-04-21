@@ -14,3 +14,8 @@ class Room(Base):
     @property
     def json(self):
         return {'name': self.name, 'users': [user.json for user in self.users]}
+
+    @staticmethod
+    def clean_name(room_name):
+        ''.join(e for e in room_name if e.isalnum())
+        return room_name.strip().lower()

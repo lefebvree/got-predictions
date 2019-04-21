@@ -17,7 +17,8 @@ class Prediction:
         }
 
         self.character_choices = {
-            CharacterChoiceQuestion[q_id]: Character[q_val] for q_id, q_val in p_dict['character_choices'].items()
+            CharacterChoiceQuestion[q_id]:
+                Character[q_val] if q_val is not '0' else '0' for q_id, q_val in p_dict['character_choices'].items()
         }
 
     @property
@@ -27,23 +28,43 @@ class Prediction:
                 q.name: v.value for q, v in self.character_fates.items()
             },
             'yes_no_questions': {
-                q.name: v.value for q, v in self.yes_no_questions.items()
+                q.name: v for q, v in self.yes_no_questions.items()
             },
             'character_choices': {
-                q.name: v.id for q, v in self.character_choices.items()
+                q.name: v.name if v is not '0' else '0' for q, v in self.character_choices.items()
             }
         }
 
+    def remove_answered_questions(self):
+        chars = list(self.character_fates.keys())
+        for char in chars:
+            if char.answer is not None:
+                self.character_fates.pop(char)
+        questions = list(self.yes_no_questions.keys())
+        for question in questions:
+            if question.answer is not None:
+                self.yes_no_questions.pop(question)
+        choices = list(self.character_choices.keys())
+        for choice in choices:
+            if choice.answer is not None:
+                self.character_choices.pop(choice)
+
 
 class Question(Enum):
-    def __init__(self, text, img_src):
+    def __init__(self, text, img_src, answer):
         super().__init__()
         self.text = text
         self.img_src = img_src
+        self.answer = answer
 
     @property
     def json(self):
-        return {'text': self.text, 'src': self.img_src}
+        val = {'text': self.text}
+        if self.img_src is not None:
+            val['src'] = self.img_src
+        if self.answer is not None:
+            val['answer'] = self.answer
+        return val
 
     @staticmethod
     def get_questions_json(question_class):
@@ -58,68 +79,71 @@ class Question(Enum):
         }
 
 
-class Character(Question):
-    JON_SNOW = ('Jon Snow', 'jon_snow.jpeg')
-    ARYA_STARK = ('Arya Stark', 'arya_stark.jpeg')
-    SANSA_STARK = ('Sansa Stark', 'sansa_stark.jpeg')
-    BRAN_STARK = ('Bran Stark', 'bran_stark.jpeg')
-    DAENERYS_TARGARYEN = ('Daenerys Targaryen', 'daenerys_targaryen.jpeg')
-    CERSEI_LANNISTER = ('Cersei Lannister', 'cersei_lannister.jpeg')
-    JAIME_LANNISTER = ('Jaime Lannister', 'jaime_lannister.jpeg')
-    TYRION_LANNISTER = ('Tyrion Lannister', 'tyrion_lannister.jpeg')
-    BRIENNE_OF_TARTH = ('Brienne Of Tarth', 'brienne_of_tarth.jpeg')
-    MELISANDRE = ('Melisandre', 'melisandre.jpeg')
-    VARYS = ('Varys', 'varys.jpeg')
-    DAVOS_SEAWORTH = ('Davos Seaworth', 'davos_seaworth.jpeg')
-    GENDRY = ('Gendry', 'gendry.jpeg')
-    SAMWELL_TARLY = ('Samwell Tarly', 'samwell_tarly.jpeg')
-    GILLY = ('Gilly', 'gilly.jpeg')
-    BABY_SAM = ('Baby Sam', 'baby_sam.jpeg')
-    GHOST = ('Ghost', 'ghost.jpeg')
-    NYMERIA = ('Nymeria', 'nymeria.jpeg')
-    DROGON = ('Drogon', 'drogon.jpeg')
-    RHAEGAL = ('Rhaegal', 'rhaegal.jpeg')
-    LYANNA_MORMONT = ('Lyanna Mormont', 'lyanna_mormont.jpeg')
-    QYBURN = ('Qyburn', 'qyburn.jpeg')
-    GREGOR_CLEGANE = ('Gregor Clegane', 'the_mountain.jpeg')
-    SANDOR_CLEGANE = ('Sandor Clegane', 'the_hound.jpeg')
-    THEON_GREYJOY = ('Theon Greyjoy', 'theon_greyjoy.jpeg')
-    JORAH_MORMONT = ('Jorah Mormont', 'jorah_mormont.jpeg')
-    BRONN = ('Bronn', 'bronn.jpeg')
-    GREY_WORM = ('Grey Worm', 'grey_worm.jpeg')
-    MISSANDEI = ('Missandei', 'missandei.jpeg')
-    BERIC_DONDARRION = ('Beric Dondarrion', 'beric_dondarrion.jpeg')
-    EURON_GREYJOY = ('Euron Greyjoy', 'euron_greyjoy.jpeg')
-    PODRICK_PAYNE = ('Podrick Payne', 'podrick_payne.jpeg')
-    TORMUND_GIANTSBANE = ('Tormund Giantsbane', 'tormund_giantsbane.jpeg')
-    YARA_GREYJOY = ('Yara Greyjoy', 'yara_greyjoy.jpeg')
-    HOT_PIE = ('Hot Pie', 'hot_pie.jpeg')
-    THE_NIGHT_KING = ('The Night King', 'the_night_king.jpeg')
-
-
 class CharacterStatus(Enum):
     ALIVE = 0
     DEAD = 1
     WHITE_WALKER = 2
 
 
+class Character(Question):
+    JON_SNOW = ('Jon Snow', 'jon_snow.jpeg', None)
+    ARYA_STARK = ('Arya Stark', 'arya_stark.jpeg', None)
+    SANSA_STARK = ('Sansa Stark', 'sansa_stark.jpeg', None)
+    BRAN_STARK = ('Bran Stark', 'bran_stark.jpeg', None)
+    DAENERYS_TARGARYEN = ('Daenerys Targaryen', 'daenerys_targaryen.jpeg', None)
+    CERSEI_LANNISTER = ('Cersei Lannister', 'cersei_lannister.jpeg', None)
+    JAIME_LANNISTER = ('Jaime Lannister', 'jaime_lannister.jpeg', None)
+    TYRION_LANNISTER = ('Tyrion Lannister', 'tyrion_lannister.jpeg', None)
+    BRIENNE_OF_TARTH = ('Brienne Of Tarth', 'brienne_of_tarth.jpeg', None)
+    MELISANDRE = ('Melisandre', 'melisandre.jpeg', None)
+    VARYS = ('Varys', 'varys.jpeg', None)
+    DAVOS_SEAWORTH = ('Davos Seaworth', 'davos_seaworth.jpeg', None)
+    GENDRY = ('Gendry', 'gendry.jpeg', None)
+    SAMWELL_TARLY = ('Samwell Tarly', 'samwell_tarly.jpeg', None)
+    GILLY = ('Gilly', 'gilly.jpeg', None)
+    BABY_SAM = ('Baby Sam', 'baby_sam.jpeg', None)
+    GHOST = ('Ghost', 'ghost.jpeg', None)
+    NYMERIA = ('Nymeria', 'nymeria.jpeg', None)
+    DROGON = ('Drogon', 'drogon.jpeg', None)
+    RHAEGAL = ('Rhaegal', 'rhaegal.jpeg', None)
+    LYANNA_MORMONT = ('Lyanna Mormont', 'lyanna_mormont.jpeg', None)
+    QYBURN = ('Qyburn', 'qyburn.jpeg', None)
+    GREGOR_CLEGANE = ('Gregor Clegane', 'the_mountain.jpeg', None)
+    SANDOR_CLEGANE = ('Sandor Clegane', 'the_hound.jpeg', None)
+    THEON_GREYJOY = ('Theon Greyjoy', 'theon_greyjoy.jpeg', None)
+    JORAH_MORMONT = ('Jorah Mormont', 'jorah_mormont.jpeg', None)
+    BRONN = ('Bronn', 'bronn.jpeg', None)
+    GREY_WORM = ('Grey Worm', 'grey_worm.jpeg', None)
+    MISSANDEI = ('Missandei', 'missandei.jpeg', None)
+    BERIC_DONDARRION = ('Beric Dondarrion', 'beric_dondarrion.jpeg', None)
+    EURON_GREYJOY = ('Euron Greyjoy', 'euron_greyjoy.jpeg', None)
+    PODRICK_PAYNE = ('Podrick Payne', 'podrick_payne.jpeg', None)
+    TORMUND_GIANTSBANE = ('Tormund Giantsbane', 'tormund_giantsbane.jpeg', None)
+    YARA_GREYJOY = ('Yara Greyjoy', 'yara_greyjoy.jpeg', None)
+    HOT_PIE = ('Hot Pie', 'hot_pie.jpeg', None)
+    THE_NIGHT_KING = ('The Night King', 'the_night_king.jpeg', None)
+    NED_STARK = ('Ned Stark', 'hot_pie.jpeg', 1)
+
+
 class YesNoQuestion(Question):
-    CERSEI_PREGNANT = ('Cersei is pregnant', 'cersei_pregnant.jpeg')
-    DAENERYS_PREGNANT = ('Daenerys get pregnant', 'daenerys_pregnant.jpeg')
-    BRAN_NIGHT_KING = ('Bran is related to the Night King', 'bran_night_king.jpeg')
-    CANT_KILL_WW = ('Someone won\'t be able to kill his friend who turned into a white walker', 'cant_kill_ww.jpeg')
-    WINTERFELL_DESTROYED = ('Winterfell get destroyed', 'winterfell_destroyed.jpeg')
-    KING_LANDING_DESTROYED = ('King\'s Landing get destroyed', 'kings_landing_destroyed.jpeg')
-    WW_REACH_ESSOS = ('The White Walkers reach Essos', 'ww_essos.jpeg')
-    ARYA_KILL_LIST = ('Arya completes her kill list', 'arya_kill_list.jpeg')
-    NED_STARK_COMEBACK = ('Sean Bean as Ned Stark will reappear for a scene', 'ned_stark_comeback.jpeg')
-    JAQEN_COMEBACK = ('Jaqen H\'ghar makes a comeback', 'jaqen_comeback.jpeg')
-    EPISODE_2_END = ('Episode 2 ends with the White Walkers in front of Winterfell', 'episode_2_end.jpeg')
+    CERSEI_PREGNANT = ('Cersei is pregnant', None, None)
+    DAENERYS_PREGNANT = ('Daenerys get pregnant', None, None)
+    BRAN_NIGHT_KING = ('Bran is related to the Night King', None, None)
+    CANT_KILL_WW = ('Someone won\'t be able to kill his friend who turned into a white walker', None, None)
+    WINTERFELL_DESTROYED = ('Winterfell get destroyed', None, None)
+    KING_LANDING_DESTROYED = ('King\'s Landing get destroyed', None, None)
+    WW_REACH_ESSOS = ('The White Walkers reach Essos', None, None)
+    ARYA_KILL_LIST = ('Arya completes her kill list', None, None)
+    NED_STARK_COMEBACK = ('Sean Bean as Ned Stark will reappear for a scene', None, None)
+    JAQEN_COMEBACK = ('Jaqen H\'ghar makes a comeback', None, None)
+    ALREADY_TRUE = ('Already true', None, True)
+    ALREADY_FALSE = ('Already false', None, False)
 
 
 class CharacterChoiceQuestion(Question):
-    IRON_THRONE = ('will be the last sitting on the Iron Throne', 'iron_throne.jpeg')
-    KILL_NIGHT_KING = ('kill the Night King', 'kill_night_king.jpeg')
-    KILL_CERSEI = ('will kill Cersei', 'kill_cersei.jpeg')
-    AZOR_AHAI = ('is Azor Ahai', 'azor_ahai.jpeg')
-    CLEGANE_BOWL = ('will win the Cleganebowl', 'clegane_bowl.jpeg')
+    IRON_THRONE = ('will be the last sitting on the Iron Throne', None, None)
+    KILL_NIGHT_KING = ('will kill the Night King', None, None)
+    KILL_CERSEI = ('will kill Cersei', None, None)
+    AZOR_AHAI = ('is Azor Ahai', None, None)
+    CLEGANE_BOWL = ('will win the Cleganebowl', None, None)
+    TEST = ('loses his head', None, 'Ned Stark')

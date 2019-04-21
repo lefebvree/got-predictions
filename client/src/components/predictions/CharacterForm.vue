@@ -7,13 +7,14 @@
       <b>+2</b> points when guessing correctly which character performs an action <br>
     </p>
     <div class="accordion-body">
-      <table class="table table-hover">
+      <table class="table">
         <tbody>
           <character-question v-for="(v, k) in choices"
             :key="k"
             :id="k"
             :text="v.text"
             :src="v.src"
+            :answer="v.answer"
           ></character-question>
         </tbody>
       </table>

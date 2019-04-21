@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr :class="{ disabled: disabled }">
     <td>
       <div>
         <div class="popover popover-right">
@@ -19,19 +19,19 @@
     </td>
     <td class="text-center">
       <label class="form-radio form-inline" title="Alive">
-        <input type="radio" :name="id" v-model="status.alive" value="0" required>
+        <input type="radio" :name="id" v-model="status.alive" value="0" required :disabled="disabled">
         <i class="form-icon"></i>
       </label>
     </td>
     <td class="text-center ">
       <label class="form-radio form-inline" title="Dead">
-        <input type="radio" :name="id" v-model="status.alive" value="1" required>
+        <input type="radio" :name="id" v-model="status.alive" value="1" required :disabled="disabled">
         <i class="form-icon"></i>
       </label>
     </td>
     <td class="text-center">
       <label class="form-checkbox form-inline" title="White Walker">
-        <input type="checkbox" :name="'ww-' + id" v-model="status.ww" :disabled="status.alive === '0'" value="2">
+        <input type="checkbox" :name="'ww-' + id" v-model="status.ww" :disabled="disableWWCase" value="2">
         <i class="form-icon"></i>
       </label>
     </td>
@@ -45,7 +45,8 @@ export default {
   props: {
     id: String,
     name: String,
-    src: String
+    src: String,
+    answer: Number
   },
   data: function () {
     return {
@@ -62,17 +63,42 @@ export default {
       } catch (e) {
         return ''
       }
+    },
+
+    disabled () {
+      return this.answer !== undefined
+    },
+
+    disableWWCase () {
+      return this.disabled || this.status.alive !== '1'
+    }
+  },
+  methods: {
+    saveAnswer () {
+      const formValue = (this.status.alive === '0') ? 0 : ((this.status.ww) ? 2 : 1)
+      this.$store.commit('setPredictionAnswer', {
+        cat: 'character_fates', id: this.id, ans: formValue
+      })
     }
   },
   watch: {
     status: {
-      handler (s) {
-        if (s.alive === '0') {
-          s.ww = false
-        }
+      handler (status) {
+        if (status.alive === '0') status.ww = false
+        this.saveAnswer()
       },
       deep: true
     }
+  },
+  mounted () {
+    if (this.disabled) {
+      this.status.alive = this.answer === 0 ? '0' : '1'
+      this.status.ww = this.answer === 2
+    } else {
+      this.status.alive = '0'
+    }
+
+    this.saveAnswer()
   }
 }
 </script>

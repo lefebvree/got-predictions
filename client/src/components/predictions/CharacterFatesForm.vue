@@ -16,13 +16,22 @@
       <b>White Walker</b> : Turned into a White Walker during the season, even if he died again later.
     </p>
     <div class="accordion-body">
-      <table class="table table-hover">
+      <table class="table table-scroll">
         <thead>
           <tr>
             <th class="col-8 col-sm-9">Character</th>
-            <th class="text-center col-1" title="Still alive at the end of the season">Alive</th>
-            <th class="text-center col-1" title="Gone for good, no comeback">Dead</th>
-            <th class="text-center col-1" title="Even if he died again, this character turned a some point">White Walker</th>
+            <th class="text-center col-1" title="Still alive at the end of the season">
+              <span class="hide-sm">Alive</span>
+              <emoticon class="show-sm text-justify"></emoticon>
+            </th>
+            <th class="text-center col-1" title="Gone for good, no comeback">
+              <span class="hide-sm">Dead</span>
+              <emoticon-dead class="show-sm text-justify"></emoticon-dead>
+            </th>
+            <th class="text-center col-1" title="Even if he died again, this character turned a some point">
+              <span class="hide-sm">White Walker</span>
+              <skull class="show-sm text-justify"></skull>
+            </th>
             <th class="col-1 col-sm-0"></th>
           </tr>
         </thead>
@@ -32,6 +41,7 @@
                         :id="k"
                         :name="v.text"
                         :src="v.src"
+                        :answer="v.answer"
         ></character-fate>
         </tbody>
       </table>

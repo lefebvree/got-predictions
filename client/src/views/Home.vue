@@ -1,6 +1,6 @@
 <template>
   <div>
-    <WelcomeScreen :room-name="prefilledRoomName"/>
+    <WelcomeScreen :initial-room-name="prefilledRoomName"/>
   </div>
 </template>
 

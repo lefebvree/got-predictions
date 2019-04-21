@@ -7,13 +7,14 @@
       <b>+1</b> / <b>-1</b> points when guessing correctly that an event will happen or not.
     </p>
     <div class="accordion-body">
-      <table class="table table-hover">
+      <table class="table">
         <tbody>
           <yes-no-question v-for="(v, k) in characters"
             :key="k"
             :id="k"
             :text="v.text"
             :imgSrc="v.imgSrc"
+            :answer="v.answer"
           ></yes-no-question>
         </tbody>
       </table>
@@ -41,3 +42,9 @@ export default {
   }
 }
 </script>
+
+<style>
+  .form-checkbox {
+    transform: translateY(-2px);
+  }
+</style>

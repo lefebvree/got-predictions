@@ -3,26 +3,35 @@
     <div class="panel card">
       <h3 class="ml-2"> Make your predictions</h3>
       <p class="text">
-        Be the first one in room <b>{{ room.name }}</b> to make your predictions and find out who is the Three-eyed raven capable of foreseeing every outcome of the season !
+        <span v-if="room.users.length === 0">Be the first one </span>
+        <span v-else>Join {{ room.users.length }} viewer{{ room.users.length === 1 ? '' : 's' }}  </span>
+        in room <b>{{ room.name }}</b> to make your predictions and find out who is the Three-eyed raven capable of foreseeing every outcome of the season !
+      </p>
+      <p class="text">
+        Some questions have been answered already and are disabled, you can't gain or loose any points with them.
       </p>
     </div>
-    <form>
+    <form @submit="checkForm" ref="form">
       <character-fates-form class="panel card"></character-fates-form>
       <yes-no-form class="panel card"></yes-no-form>
       <character-form class="panel card"></character-form>
       <div class="panel card">
         <div class="panel-text">
-          <p>
-            Pick a name to to post your predictions :
-          </p>
           <div class="columns">
-            <div class="col-5">
-              <div>
-                <input class="form-input" type="text" placeholder="Name">
+            <div class="col-3 col-lg-5 col-md-7 col-sm-12 mb-2">
+              <div class="form-group">
+                <label class="form-label" for="user-name">User Name</label>
+                <input v-model="userName" class="form-input" type="text" placeholder="Name" minlength="3" maxlength="25" ref="nameInput"
+                       autocomplete="off" tabindex="1" v-on:input="userName = $event.target.value" id="user-name">
               </div>
             </div>
-            <div class="col-12 text-center mt-2">
-              <button class="btn btn-primary input-group-btn btn-lg">Submit <arrow-right-circle class="ml-2 mr-1"></arrow-right-circle> </button>
+            <div class="col-7 col-sm-12 m-2">
+              <span>
+                Post your predictions
+              </span><br>
+              <button class="btn input-group-btn mt-1" tabindex="2" :disabled="!validName">
+                Submit <arrow-right-circle class="ml-2 mr-1"></arrow-right-circle>
+              </button>
             </div>
           </div>
         </div>
@@ -42,27 +51,59 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'prediction',
-  components: {
-    CharacterFatesForm,
-    YesNoForm,
-    CharacterForm,
-    ArrowRightCircle
+
+  data: function () {
+    return {
+      userName: '',
+      validName: false
+    }
   },
 
-  data () {
-    return {
-      room: {
-        name: ''
+  computed: {
+    room: function () {
+      return this.$store.state.currentRoom
+    }
+  },
+
+  watch: {
+    userName: function () {
+      if (this.$refs.nameInput && this.$refs.nameInput.checkValidity()) {
+        this.validName = !this.room.users.map(u => u.name).includes(this.userName)
+      } else {
+        this.validName = false
       }
     }
   },
 
   methods: {
-    ...mapActions(['fetchQuestions'])
+    ...mapActions(['fetchQuestions']),
+
+    checkForm: function (e) {
+      e.preventDefault()
+      if (this.$refs.form && this.$refs.form.reportValidity()) {
+        this.post()
+      }
+    },
+
+    post: function () {
+      this.$store.dispatch('submitPredictions', this.userName)
+        .then(answer => {
+          this.$store.commit('setRoomName', { 'name': this.room.name, 'userName': answer.name })
+          this.$store.commit('saveRooms')
+          this.$router.push(`/${this.room.name}`)
+        })
+    }
   },
 
   mounted () {
     this.fetchQuestions()
+  },
+
+  components: {
+    CharacterFatesForm,
+    YesNoForm,
+    CharacterForm,
+    ArrowRightCircle
   }
 }
 </script>
@@ -81,6 +122,11 @@ export default {
 
   td.popover {
     display: table-cell;
+  }
+
+  tr.disabled {
+    background-color: #dadada;
+    opacity: 0.5;
   }
 
   .popover .popover-container .card, .popover .popover-container img {
