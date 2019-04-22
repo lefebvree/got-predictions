@@ -47,8 +47,6 @@ import CharacterForm from '@/components/predictions/CharacterForm.vue'
 
 import ArrowRightCircle from 'vue-material-design-icons/ArrowRightCircle.vue'
 
-import { mapActions } from 'vuex'
-
 export default {
   name: 'prediction',
 
@@ -79,8 +77,6 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchQuestions']),
-
     checkForm: function (e) {
       e.preventDefault()
       if (this.$refs.form && this.$refs.form.reportValidity()) {
@@ -96,10 +92,6 @@ export default {
           this.$router.push(`/${this.room.name}`)
         })
     }
-  },
-
-  mounted () {
-    this.fetchQuestions()
   },
 
   components: {

@@ -37,11 +37,4 @@ export default {
     cursor: pointer;
   }
 
-  .accordion-header .material-design-icon {
-    transition: transform .25s;
-  }
-
-  .accordion[open] .accordion-header .material-design-icon, .accordion input:checked~.accordion-header .material-design-icon {
-    transform: rotate(90deg) translateX(3px) translateY(-3px);
-  }
 </style>

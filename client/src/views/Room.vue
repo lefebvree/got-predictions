@@ -39,21 +39,22 @@
           <h4><account-multiple-outline class="mr-2"></account-multiple-outline> Users</h4>
           <ul v-if="Object.keys(room.users).length > 0">
             <li v-for="(user, id) in room.users" :key="user.name">
-              {{ user.name }}
-<!--              <a @click="checkPredictions(id)">-->
-<!--                {{ user.name }}-->
-<!--              </a>-->
+              <span class="text-large pointer" @click="checkPredictions(id)">
+                {{ user.name }}
+                <book-open-page-variant class="ml-2"></book-open-page-variant>
+              </span>
             </li>
           </ul>
           <p v-else>No one has posted any predictions yet, be the first one !</p>
         </div>
       </div>
     </div>
-<!--    <prediction-view ref="predictionsView"-->
-<!--      :userName="checkedUserName"-->
-<!--      :roomName="room.name"-->
-<!--      :predictions="checkedPredictions"-->
-<!--    ></prediction-view>-->
+    <prediction-view ref="predictionsView"
+      :userName="checkedUserName"
+      :roomName="room.name"
+      :predictionJson="checkedPredictions"
+      :date="checkedDate"
+    ></prediction-view>
   </div>
 </template>
 
@@ -63,6 +64,7 @@ import PredictionView from '@/components/predictions/PredictionView.vue'
 
 import AccountMultipleOutline from 'vue-material-design-icons/AccountMultipleOutline.vue'
 import PencilPlusOutline from 'vue-material-design-icons/PencilPlusOutline.vue'
+import BookOpenPageVariant from 'vue-material-design-icons/BookOpenPageVariant.vue'
 import SquareEditOutline from 'vue-material-design-icons/SquareEditOutline.vue'
 import CheckOutline from 'vue-material-design-icons/CheckOutline.vue'
 import PodiumGold from 'vue-material-design-icons/PodiumGold.vue'
@@ -75,7 +77,8 @@ export default {
     return {
       refreshInterval: null,
       checkedUserName: '',
-      checkedPredictions: ''
+      checkedPredictions: '',
+      checkedDate: ''
     }
   },
 
@@ -103,6 +106,7 @@ export default {
       const user = this.room.users[userId]
       this.checkedUserName = user.name
       this.checkedPredictions = user.predictions
+      this.checkedDate = user.joined
       this.$refs.predictionsView.$el.classList.add('active')
     }
   },
@@ -123,7 +127,8 @@ export default {
     CheckOutline,
     PodiumGold,
     Medal,
-    PredictionView
+    PredictionView,
+    BookOpenPageVariant
   }
 }
 </script>

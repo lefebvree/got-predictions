@@ -22,8 +22,11 @@
 
 <script>
 
+import { mapActions } from 'vuex'
+
 export default {
   methods: {
+    ...mapActions(['fetchQuestions']),
     checkRoom: function () {
       const roomName = this.$route.params.room
       if (roomName && this.$store.state.currentRoom.name !== roomName) {
@@ -35,6 +38,7 @@ export default {
   },
   mounted () {
     this.checkRoom()
+    this.fetchQuestions()
   },
   updated () {
     this.checkRoom()
@@ -53,7 +57,7 @@ export default {
     overflow-x: hidden;
   }
 
-  h1, h2, h3 {
+  h1, h2, h3, .slab {
     font-family: 'Roboto Slab', serif;
   }
 
@@ -89,6 +93,18 @@ export default {
 
   button .material-design-icon {
     transform: translateY(1px);
+  }
+
+  .accordion-header .material-design-icon {
+    transition: transform .25s;
+  }
+
+  .accordion[open] .accordion-header .material-design-icon, .accordion input:checked~.accordion-header .material-design-icon {
+    transform: rotate(90deg) translateX(3px) translateY(-3px);
+  }
+
+  .pointer {
+    cursor: pointer;
   }
 
 </style>
