@@ -9,10 +9,11 @@ from model.model import Base
 from model.room import Room
 from model.user import User
 from model.prediction import Prediction, Question
+from settings import DB_FILE
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/got.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_FILE
 db = SQLAlchemy(app)
 
 

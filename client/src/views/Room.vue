@@ -99,8 +99,7 @@ export default {
       if (this.posted) {
         const userName = this.$store.state.savedRooms[this.room.name].userName
         const user = Object.entries(this.room.users).filter(([_, user]) => user.name === userName)
-
-        return (user.length !== 0) ? user[0].id : null
+        return (user.length !== 0) ? user[0][0] : null
       } else {
         return null
       }
