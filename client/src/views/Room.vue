@@ -20,8 +20,8 @@
       <div class="col-4 col-md-12 px-2">
         <div class="my-2 card panel-text">
           <h4><pencil-plus-outline class="mr-2"></pencil-plus-outline> Predictions</h4>
-          <div v-if="posted">
-            <button class="btn btn-error m-2">
+          <div v-if="userId !== null">
+            <button class="btn btn-error m-2" @click="checkPredictions(userId)">
               <check-outline class="mr-2"></check-outline>
               See your Predictions
             </button>
@@ -88,11 +88,21 @@ export default {
     },
 
     posted () {
-      const roomName = this.$route.params.room.toLowerCase()
-      if (roomName in this.$store.state.savedRooms) {
-        return this.$store.state.savedRooms[roomName].userName !== undefined
+      if (this.room.name in this.$store.state.savedRooms) {
+        return this.$store.state.savedRooms[this.room.name].userName !== undefined
       } else {
         return false
+      }
+    },
+
+    userId () {
+      if (this.posted) {
+        const userName = this.$store.state.savedRooms[this.room.name].userName
+        const user = Object.entries(this.room.users).filter(([_, user]) => user.name === userName)
+
+        return (user.length !== 0) ? user[0].id : null
+      } else {
+        return null
       }
     }
   },

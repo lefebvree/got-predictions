@@ -41,9 +41,9 @@
 </template>
 
 <script>
-import CharacterFatesForm from '@/components/predictions/CharacterFatesForm.vue'
-import YesNoForm from '@/components/predictions/YesNoForm.vue'
-import CharacterForm from '@/components/predictions/CharacterForm.vue'
+import CharacterFatesForm from '@/components/predictions/fates/CharacterFatesForm.vue'
+import YesNoForm from '@/components/predictions/events/YesNoForm.vue'
+import CharacterForm from '@/components/predictions/choices/CharacterForm.vue'
 
 import ArrowRightCircle from 'vue-material-design-icons/ArrowRightCircle.vue'
 

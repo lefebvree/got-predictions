@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import CharacterQuestion from '@/components/predictions/CharacterQuestion.vue'
+import CharacterQuestion from '@/components/predictions/choices/CharacterQuestion.vue'
 import FormHeader from '@/components/predictions/FormHeader.vue'
 
 import AccountCircle from 'vue-material-design-icons/AccountCircle.vue'

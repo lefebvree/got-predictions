@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import YesNoQuestion from '@/components/predictions/YesNoQuestion.vue'
+import YesNoQuestion from '@/components/predictions/events/YesNoQuestion.vue'
 import FormHeader from '@/components/predictions/FormHeader.vue'
 
 import CalendarRange from 'vue-material-design-icons/CalendarRange.vue'

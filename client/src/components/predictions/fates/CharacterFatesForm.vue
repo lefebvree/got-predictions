@@ -52,7 +52,7 @@
 <script>
 
 import FormHeader from '@/components/predictions/FormHeader.vue'
-import CharacterFate from '@/components/predictions/CharacterFate.vue'
+import CharacterFate from '@/components/predictions/fates/CharacterFate.vue'
 
 import Emoticon from 'vue-material-design-icons/Emoticon.vue'
 import EmoticonDead from 'vue-material-design-icons/EmoticonDead.vue'

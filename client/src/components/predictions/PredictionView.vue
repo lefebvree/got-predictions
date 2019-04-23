@@ -161,8 +161,8 @@ export default {
 
     events () {
       if (this.predictions) {
-        const events = Object.entries(this.predictions['yes_no_questions']).filter(x => !!x)
-        return events.map(c => [this.getQuestionText('yes_no_questions', c[0]), c[1]])
+        const events = Object.entries(this.predictions['yes_no_questions'])
+        return events.map(c => [this.getQuestionText('yes_no_questions', c[0]), c[1]]).filter(x => !!x[0])
       } else {
         return []
       }
@@ -170,8 +170,8 @@ export default {
 
     choices () {
       if (this.predictions) {
-        const choices = Object.entries(this.predictions['character_choices']).filter(x => !!x)
-        return choices.map(c => [this.getQuestionText('character_choices', c[0]), c[1]])
+        const choices = Object.entries(this.predictions['character_choices'])
+        return choices.map(c => [this.getQuestionText('character_choices', c[0]), c[1]]).filter(x => !!x[0])
       } else {
         return []
       }
